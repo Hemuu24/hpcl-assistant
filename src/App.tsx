@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar onLogout={() => {}} />
+        <Navbar />
         <main>
           <Routes>
             <Route path="/" element={<LandingPage />} />

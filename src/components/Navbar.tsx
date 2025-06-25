@@ -1,5 +1,5 @@
 // components/Navbar.tsx
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import hpclLogo from "../assets/images/hpcl-logo.png";
 import "./Navbar.css";
 

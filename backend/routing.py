@@ -1,16 +1,20 @@
+import os
 import json
 import heapq
 
-def load_map(map_file='public/refinery_map.json'):
+def load_map(map_file=None):
     """
     Loads the refinery map from a JSON file.
-
-    Args:
-        map_file (str): The path to the map file.
 
     Returns:
         dict: A dictionary representing the graph.
     """
+    if map_file is None:
+        # Get the absolute path to the directory where this script is located
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        # Construct the absolute path to the map file
+        map_file = os.path.join(script_dir, 'public', 'refinery_map.json')
+
     with open(map_file, 'r') as f:
         return json.load(f)
 

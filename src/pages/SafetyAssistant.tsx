@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './SafetyAssistant.css';
-import refineryMap from '../../backend/public/refinery_map.json';
+import refineryMap from '/refinery_map.json';
 
 interface ChatMessage {
   sender: 'user' | 'bot';

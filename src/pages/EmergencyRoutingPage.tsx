@@ -3,7 +3,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L, { Map as LeafletMap } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import refineryMap from '../../backend/public/refinery_map.json';
+import './EmergencyRoutingPage.css';
+import refineryMap from '/refinery_map.json';
 
 interface Incident {
   hazard_type: string;
@@ -18,6 +19,7 @@ const EmergencyRoutingPage = () => {
   const [incidents, setIncidents] = useState<Incident[]>([]);
   const [route, setRoute] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [from, setFrom] = useState('');
 
   // Helper to get node by id
   const getNodeById = (id: string) => refineryMap.nodes.find((n: any) => n.id === id);

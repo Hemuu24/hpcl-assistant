@@ -3,18 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import hpclLogo from "../assets/images/hpcl-logo.png";
 import "./Navbar.css";
 
-interface NavbarProps {
-  onLogout: () => void;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
-  const navigate = useNavigate();
-
-  const handleLogoutClick = () => {
-    onLogout();
-    navigate('/login');
-  };
-
+const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -36,7 +25,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
 
         {/* User Section */}
         <div className="auth-section">
-          <button onClick={handleLogoutClick} className="dashboard-button">Logout</button>
+          <Link to="/dashboard" className="dashboard-button">Control Panel</Link>
         </div>
       </div>
     </nav>

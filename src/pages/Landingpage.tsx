@@ -34,7 +34,7 @@ const LandingPage = () => {
             <span>HPCL Emergency System</span>
           </div>
           <div className="nav-actions">
-            <button onClick={() => navigate('/login')} className="login-btn">Employee Login</button>
+            <button onClick={() => navigate('/dashboard')} className="login-btn">View Dashboard</button>
           </div>
         </div>
       </nav>

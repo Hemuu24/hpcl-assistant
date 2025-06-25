@@ -26,19 +26,6 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page">
-      {/* Navbar Placeholder */}
-      <nav className="landing-nav">
-        <div className="nav-container">
-          <div className="nav-logo">
-            <img src={hpclLogo} alt="HPCL Logo" />
-            <span>HPCL Emergency System</span>
-          </div>
-          <div className="nav-actions">
-            <button onClick={() => navigate('/dashboard')} className="login-btn">View Dashboard</button>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Slider Section */}
       <section className="hero-section">
         <div className="slider-container">
@@ -86,17 +73,20 @@ const LandingPage = () => {
       <section id="operations-section" className="operations-section">
         <h2 className="section-title">Refinery Operations</h2>
         <div className="operations-grid">
-          {operationImages.map((img, i) => (
-            <div key={i} className="operation-card">
-              <img src={img} alt={`Operation ${i+1}`} />
-              <div className="operation-overlay">
-                <h3>Operation Process {i+1}</h3>
-                <button onClick={() => navigate(`/operations/${i+1}`)}>
-                  View Details
-                </button>
-              </div>
+          <div className="operation-card">
+            <img src={operationImage1} alt="Crude Distillation Unit" />
+            <div className="operation-overlay">
+              <h3>Crude Distillation</h3>
+              <p>Primary processing of crude oil into different fractions.</p>
             </div>
-          ))}
+          </div>
+          <div className="operation-card">
+            <img src={operationImage2} alt="Fluid Catalytic Cracker" />
+            <div className="operation-overlay">
+              <h3>Catalytic Cracking</h3>
+              <p>Upgrading heavier fractions into more valuable lighter products.</p>
+            </div>
+          </div>
         </div>
       </section>
 

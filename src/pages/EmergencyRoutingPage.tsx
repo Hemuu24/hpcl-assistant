@@ -7,22 +7,31 @@ import './EmergencyRoutingPage.css';
 import refineryMap from '/refinery_map.json';
 
 interface Incident {
-  hazard_type: string;
+  id: number;
+  type: string;
   description: string;
   location: string;
   timestamp: string;
 }
 
-const EmergencyRoutingPage = () => {
+interface Node {
+  id: string;
+  name: string;
+  lat: number;
+  lon: number;
+}
+
+const EmergencyRoutingPage: React.FC = () => {
   const mapRef = useRef<LeafletMap | null>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const [incidents, setIncidents] = useState<Incident[]>([]);
+  const [blockedNodes, setBlockedNodes] = useState<string[]>([]);
+  const [to, setTo] = useState('');
   const [route, setRoute] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const [from, setFrom] = useState('');
 
   // Helper to get node by id
-  const getNodeById = (id: string) => refineryMap.nodes.find((n: any) => n.id === id);
+  const getNodeById = (id: string): Node | undefined => refineryMap.nodes.find((n: Node) => n.id === id);
 
   useEffect(() => {
     // Clean up any previous map instance
@@ -68,19 +77,20 @@ const EmergencyRoutingPage = () => {
     // Add incident markers
     incidents.forEach(incident => {
       const node = getNodeById(incident.location);
-      if (!node) return;
-      const marker = L.marker([node.lat, node.lon]).addTo(mapRef.current!);
-      marker.bindPopup(
-        `<b>${incident.hazard_type.toUpperCase()}</b><br/>${incident.description}<br/><button id="route-to-${incident.location}">Route from Main Gate</button>`
-      );
-      marker.on('popupopen', () => {
-        setTimeout(() => {
-          const btn = document.getElementById(`route-to-${incident.location}`);
-          if (btn) {
-            btn.onclick = () => handleRoute('G', incident.location);
-          }
-        }, 100);
-      });
+      if (node) {
+        const marker = L.marker([node.lat, node.lon]).addTo(mapRef.current!);
+        marker.bindPopup(
+          `<b>${incident.type.toUpperCase()}</b><br/>${incident.description}<br/><button id="route-to-${incident.location}">Route from Main Gate</button>`
+        );
+        marker.on('popupopen', () => {
+          setTimeout(() => {
+            const btn = document.getElementById(`route-to-${incident.location}`);
+            if (btn) {
+              btn.onclick = () => handleRoute('G', incident.location);
+            }
+          }, 100);
+        });
+      }
     });
     // Draw route if available
     if (route.length > 1) {

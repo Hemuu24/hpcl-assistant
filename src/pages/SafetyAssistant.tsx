@@ -92,7 +92,7 @@ const SafetyAssistant = () => {
     setError(null);
 
     try {
-      const response = await fetch('https://6b62-2405-201-c01b-a93b-62bf-b1b6-7e51-7acd.ngrok-free.app/ask', {
+      const response = await fetch('http://localhost:5000/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ const SafetyAssistant = () => {
     }
     setReportStatus('Submitting...');
     try {
-      const response = await fetch('https://6b62-2405-201-c01b-a93b-62bf-b1b6-7e51-7acd.ngrok-free.app/report-incident', {
+      const response = await fetch('http://localhost:5000/report-incident', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -165,7 +165,7 @@ const SafetyAssistant = () => {
     const formData = new FormData();
     formData.append('file', uploadFile);
     try {
-      const response = await fetch('https://6b62-2405-201-c01b-a93b-62bf-b1b6-7e51-7acd.ngrok-free.app/upload', {
+      const response = await fetch('http://localhost:5000/upload', {
         method: 'POST',
         body: formData,
       });

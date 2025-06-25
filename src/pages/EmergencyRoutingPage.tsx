@@ -64,9 +64,20 @@ const EmergencyRoutingPage: React.FC = () => {
 
   // Fetch incidents
   useEffect(() => {
-    fetch('https://hpcl-assistant-backend.onrender.com/incidents')
+    fetch('http://localhost:5000/incidents')
       .then(res => res.json())
-      .then(data => setIncidents(data.incidents || []));
+      .then(data => {
+        // Map backend fields to frontend Incident interface
+        const mapped = (data.incidents || []).map((incident: any, idx: number) => ({
+          id: idx,
+          type: incident.hazard_type || incident.type || "Unknown Hazard",
+          description: incident.description || "No description",
+          location: incident.location,
+          timestamp: incident.timestamp || "",
+          lon: 0 // Not used, but required by interface
+        }));
+        setIncidents(mapped);
+      });
   }, []);
 
   // Display incidents as markers
@@ -85,13 +96,13 @@ const EmergencyRoutingPage: React.FC = () => {
       if (node) {
         const marker = L.marker([node.lat, node.lon]).addTo(mapRef.current!);
         marker.bindPopup(
-          `<b>${incident.type.toUpperCase()}</b><br/>${incident.description}<br/><button id="route-to-${incident.location}">Route from Main Gate</button>`
+          `<b>${incident.type ? incident.type.toUpperCase() : "Unknown Hazard"}</b><br/>${incident.description || "No description"}<br/><button id="route-to-${incident.location}">Show Route from ${getNodeById(fromNode)?.name || 'Start Point'}</button>`
         );
         marker.on('popupopen', () => {
           setTimeout(() => {
             const btn = document.getElementById(`route-to-${incident.location}`);
             if (btn) {
-              btn.onclick = () => handleRoute(incident.location);
+              btn.onclick = () => handleRoute(fromNode, incident.location);
             }
           }, 100);
         });
@@ -123,13 +134,18 @@ const EmergencyRoutingPage: React.FC = () => {
     setLoading(true);
     setRoute([]); // Clear previous route
     try {
-      const response = await fetch('https://hpcl-assistant-backend.onrender.com/route', {
+      // Exclude the destination node from the blocked list
+      const blocked = incidents
+        .map(i => i.location)
+        .filter(loc => loc !== to);
+
+      const response = await fetch('http://localhost:5000/route', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           from: from,
           to: to,
-          blocked: incidents.map(i => i.location)
+          blocked: blocked
         }),
       });
       const data = await response.json();
@@ -156,15 +172,6 @@ const EmergencyRoutingPage: React.FC = () => {
             <option key={`from-${node.id}`} value={node.id}>{node.name}</option>
           ))}
         </select>
-        <select value={toNode} onChange={(e) => setToNode(e.target.value)}>
-          <option value="">Select Destination</option>
-          {mapData?.nodes.map(node => (
-            <option key={`to-${node.id}`} value={node.id}>{node.name}</option>
-          ))}
-        </select>
-        <button onClick={() => handleRoute()} disabled={loading}>
-          {loading ? 'Calculating...' : 'Find Route'}
-        </button>
       </div>
       <div className="map-container" ref={mapContainerRef}>
         {loading && <div className="loading-overlay">Calculating Route...</div>}

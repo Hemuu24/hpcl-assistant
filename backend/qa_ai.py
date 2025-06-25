@@ -22,7 +22,15 @@ def generate_ai_answer(question, context):
         str: A generated, conversational answer.
     """
     if not context:
-        return "I couldn't find any relevant information in the uploaded documents to answer your question."
+        # Use Gemini to answer the question directly, without context
+        try:
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            response = model.generate_content(question)
+            return response.text
+        except Exception as e:
+            error_message = str(e)
+            print(f"Error during AI generation: {error_message}")
+            return f"An unexpected error occurred with the AI service. Details: {error_message}"
 
     # Combine the context chunks into a single string
     context_str = "\n\n".join(context)
@@ -46,7 +54,12 @@ def generate_ai_answer(question, context):
     try:
         model = genai.GenerativeModel('gemini-1.5-flash')
         response = model.generate_content(prompt)
-        return response.text
+        answer = response.text.strip()
+        # If the answer is a "cannot answer" message, fallback to Gemini general
+        if "cannot answer based on the provided document" in answer.lower():
+            response = model.generate_content(question)
+            return response.text
+        return answer
     except Exception as e:
         error_message = str(e)
         print(f"Error during AI generation: {error_message}")

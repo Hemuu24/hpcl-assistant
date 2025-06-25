@@ -22,13 +22,11 @@ interface Node {
 }
 
 const EmergencyRoutingPage: React.FC = () => {
-  const mapRef = useRef<LeafletMap | null>(null);
-  const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const [incidents, setIncidents] = useState<Incident[]>([]);
-  const [blockedNodes, setBlockedNodes] = useState<string[]>([]);
-  const [to, setTo] = useState('');
   const [route, setRoute] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const mapRef = useRef<LeafletMap | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
   // Helper to get node by id
   const getNodeById = (id: string): Node | undefined => refineryMap.nodes.find((n: Node) => n.id === id);

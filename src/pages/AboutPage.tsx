@@ -1,53 +1,92 @@
 import './AboutPage.css';
 
+const heritageData = [
+  {
+    year: '1957',
+    title: 'Refinery Established',
+    description: 'HPCL Visakh Refinery commenced operations with an initial capacity of 0.65 MMTPA, marking the beginning of our safety journey.',
+  },
+  {
+    year: '1976',
+    title: 'Nationalization',
+    description: 'Became a part of the Hindustan Petroleum Corporation Limited (HPCL) family, aligning with national energy goals.',
+  },
+  {
+    year: '1999',
+    title: 'First Safety Management System',
+    description: 'Implemented our first comprehensive safety management system, setting industry benchmarks for operational safety.',
+  },
+  {
+    year: '2013',
+    title: 'Refinery Modernization Project',
+    description: 'Completed a major expansion to increase capacity and upgrade technology for producing cleaner, high-quality fuels.',
+  },
+  {
+    year: 'Today',
+    title: 'A Leader in Digital Transformation',
+    description: 'Integrating AI and digital solutions, like this Emergency Response System, to achieve new heights in safety and efficiency.',
+  }
+];
+
+const coreValuesData = [
+  {
+    title: 'Safety First',
+    description: 'Every decision begins with safety considerations for our people, community, and environment.'
+  },
+  {
+    title: 'Innovation',
+    description: 'Continuously evolving our systems with the latest safety technologies and best practices.'
+  },
+  {
+    title: 'Accountability',
+    description: 'Clear safety responsibilities at all organizational levels with transparent reporting.'
+  }
+];
+
 const AboutPage = () => {
   return (
-    <div className="about-page">
-      <header className="about-header">
-        <div className="header-overlay"></div>
-        <h1>About HPCL Visakh Refinery</h1>
-        <p>A cornerstone of India's energy sector since 1957</p>
-      </header>
-      
-      <section className="about-content">
-        <div className="content-card">
-          <h2>Our History & Legacy</h2>
-          <p>
-            Commissioned in 1957, the Visakh Refinery is one of the oldest and most strategic refineries in India. 
-            Originally established as Caltex Oil Refining (India) Ltd., it was nationalized in 1976 and became part of the Hindustan Petroleum Corporation Limited (HPCL) family.
-            Over the decades, it has undergone numerous upgrades and expansions to become a modern, high-complexity facility, currently boasting a capacity of 8.3 MMTPA.
-          </p>
-        </div>
-
-        <div className="content-card">
-          <h2>Commitment to Safety</h2>
-          <p>
-            Safety is not just a priority; it is a core value that drives every aspect of our operations. 
-            We are committed to achieving a zero-incident workplace through continuous improvement of our processes, state-of-the-art technology, and comprehensive training for all our personnel.
-            This Emergency Response System is a testament to our proactive approach to managing and mitigating risks effectively.
-          </p>
-        </div>
-
-        <div className="content-card">
-          <h2>Technological Excellence</h2>
-          <p>
-            The Visakh Refinery is equipped with advanced processing units, including a Fluidized Catalytic Cracker (FCC), hydrocrackers, and diesel hydro-treating units. 
-            We leverage cutting-edge digital technologies, from advanced process control to AI-driven predictive maintenance, to ensure operational efficiency, reliability, and environmental compliance.
-          </p>
-        </div>
-
-        <div className="content-card">
-          <h2>Environmental Stewardship</h2>
-          <p>
-            As a responsible corporate citizen, we are dedicated to minimizing our environmental footprint. 
-            The refinery has implemented extensive environmental management programs, including low-NOx burners, an advanced effluent treatment plant, and a robust leak detection and repair (LDAR) program, all compliant with the latest national and international standards.
-          </p>
+    <div className="about-page-timeline">
+      <div className="heritage-header">
+        <h1>Our Heritage</h1>
+      </div>
+      <section className="timeline-section">
+        <div className="timeline-container">
+          {heritageData.map((item, index) => (
+            <div key={index} className="timeline-item">
+              <div className="timeline-dot"></div>
+              <div className="timeline-year">{item.year}</div>
+              <div className="timeline-content">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      <footer className="about-footer">
-        <p>HPCL Visakh Refinery - Powering the Nation, Protecting our People.</p>
-      </footer>
+      <section className="values-section">
+        <div className="values-header">
+          <h2>Our Core Values</h2>
+        </div>
+        <div className="values-grid">
+          {coreValuesData.map((value, index) => (
+            <div key={index} className="value-card">
+              <h3>{value.title}</h3>
+              <p>{value.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="cta-section-about">
+        <div className="cta-content-about">
+          <h2>Join Us in Setting Safety Standards</h2>
+          <div className="cta-buttons-about">
+            <button className="primary-button-about">Contact Our Safety Team</button>
+            <button className="secondary-button-about">Safety Career Opportunities</button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

@@ -24,6 +24,8 @@ interface Node {
 const EmergencyRoutingPage: React.FC = () => {
   const [mapData, setMapData] = useState<{ nodes: Node[] } | null>(null);
   const [incidents, setIncidents] = useState<Incident[]>([]);
+  const [fromNode, setFromNode] = useState<string>('G');
+  const [toNode, setToNode] = useState<string>('');
   const [route, setRoute] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const mapRef = useRef<LeafletMap | null>(null);
@@ -109,16 +111,24 @@ const EmergencyRoutingPage: React.FC = () => {
     }
   }, [mapData, incidents, route]);
 
-  // Route calculation
-  const handleRoute = async (endNode: string) => {
+  const handleRoute = async (start?: string, end?: string) => {
+    const from = start || fromNode;
+    const to = end || toNode;
+
+    if (!from || !to) {
+      alert("Please select a start and destination.");
+      return;
+    }
+
     setLoading(true);
+    setRoute([]); // Clear previous route
     try {
       const response = await fetch('http://localhost:5000/route', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          from: 'G', // Assuming Main Gate is the start
-          to: endNode,
+          from: from,
+          to: to,
           blocked: incidents.map(i => i.location)
         }),
       });
@@ -126,24 +136,39 @@ const EmergencyRoutingPage: React.FC = () => {
       if (response.ok && data.route) {
         setRoute(data.route);
       } else {
-        alert(data.error || 'No route found');
+        alert(data.error || 'Failed to find a route.');
       }
+    } catch (error) {
+      console.error('Error fetching route:', error);
+      alert('An error occurred while fetching the route.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Emergency Routing System</h1>
-      <div ref={mapContainerRef} id="emergency-map" style={{ height: 500, width: '100%', borderRadius: 8, marginBottom: 24 }}></div>
-      {loading && <p>Calculating route...</p>}
-      <p>Click on an incident marker and use the popup to route from Main Gate.</p>
-      {route.length > 1 && (
-        <div style={{ marginTop: 16, background: '#f8f9fa', padding: 12, borderRadius: 8 }}>
-          <b>Route:</b> {route.map(id => getNodeById(id)?.name || id).join(' → ')}
-        </div>
-      )}
+    <div className="emergency-routing-page">
+      <div className="routing-controls">
+        <h2>Calculate Emergency Route</h2>
+        <select value={fromNode} onChange={(e) => setFromNode(e.target.value)}>
+          <option value="">Select Start Point</option>
+          {mapData?.nodes.map(node => (
+            <option key={`from-${node.id}`} value={node.id}>{node.name}</option>
+          ))}
+        </select>
+        <select value={toNode} onChange={(e) => setToNode(e.target.value)}>
+          <option value="">Select Destination</option>
+          {mapData?.nodes.map(node => (
+            <option key={`to-${node.id}`} value={node.id}>{node.name}</option>
+          ))}
+        </select>
+        <button onClick={() => handleRoute()} disabled={loading}>
+          {loading ? 'Calculating...' : 'Find Route'}
+        </button>
+      </div>
+      <div className="map-container" ref={mapContainerRef}>
+        {loading && <div className="loading-overlay">Calculating Route...</div>}
+      </div>
     </div>
   );
 };

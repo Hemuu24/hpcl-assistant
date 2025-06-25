@@ -7,6 +7,8 @@ import sliderImage4 from '../assets/images/sliderimage4.jpeg';
 import sliderImage5 from '../assets/images/sliderimage5.jpeg';
 import operationImage1 from '../assets/images/sliderimage1.jpg';
 import operationImage2 from '../assets/images/sliderimage3.jpeg';
+import operationImage3 from '../assets/images/image1.jpeg';
+import operationImage4 from '../assets/images/refinery.jpeg';
 
 const LandingPage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -74,6 +76,7 @@ const LandingPage = () => {
             <div className="operation-overlay">
               <h3>Crude Distillation</h3>
               <p>Primary processing of crude oil into different fractions.</p>
+              <button className="learn-more-button">Learn More</button>
             </div>
           </div>
           <div className="operation-card">
@@ -81,6 +84,23 @@ const LandingPage = () => {
             <div className="operation-overlay">
               <h3>Catalytic Cracking</h3>
               <p>Upgrading heavier fractions into more valuable lighter products.</p>
+              <button className="learn-more-button">Learn More</button>
+            </div>
+          </div>
+          <div className="operation-card">
+            <img src={operationImage3} alt="Hydrotreating Unit" />
+            <div className="operation-overlay">
+              <h3>Hydrotreating</h3>
+              <p>Removing sulfur and other contaminants from distillates.</p>
+              <button className="learn-more-button">Learn More</button>
+            </div>
+          </div>
+          <div className="operation-card">
+            <img src={operationImage4} alt="Control Room" />
+            <div className="operation-overlay">
+              <h3>Process Control</h3>
+              <p>Monitoring and optimizing all refinery unit operations.</p>
+              <button className="learn-more-button">Learn More</button>
             </div>
           </div>
         </div>

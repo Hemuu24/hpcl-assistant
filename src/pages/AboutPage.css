@@ -1,5 +1,7 @@
 /* About Page Base Styles */
 .about-page {
+  padding-top: 70px; /* Account for fixed navbar */
+  background-color: #f4f7f6;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   line-height: 1.6;
@@ -137,13 +139,47 @@
 }
 
 .timeline-year {
-  padding: 0.5rem 1.5rem;
-  background-color: #002d72;
+  position: absolute;
+  top: 20px;
+  padding: 0 15px; /* Use padding instead of fixed width */
+  height: 30px;
+  line-height: 30px;
+  background-color: var(--hpcl-blue);
   color: white;
-  border-radius: 30px;
-  font-weight: 600;
-  display: inline-block;
-  margin-bottom: 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1;
+}
+
+/* Pointer for the year marker */
+.timeline-year::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: var(--hpcl-blue);
+  transform: translateY(-50%) rotate(45deg);
+  z-index: -1;
+}
+
+.timeline-item:nth-child(odd) .timeline-year {
+  right: 0;
+  transform: translateX(50%);
+}
+
+.timeline-item:nth-child(even) .timeline-year {
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.timeline-item:nth-child(odd) .timeline-year::before {
+  left: -5px; /* Attach pointer to the left side */
+}
+
+.timeline-item:nth-child(even) .timeline-year::before {
+  right: -5px; /* Attach pointer to the right side */
 }
 
 .timeline-content {
@@ -225,55 +261,99 @@
 
 /* Values Section */
 .values-section {
-  padding: 5rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 4rem 2rem;
+  background-color: #f4f7f6;
+  text-align: center;
 }
 
-.values-section h2 {
-  text-align: center;
-  color: #002d72;
-  font-size: 2.2rem;
-  margin-bottom: 3rem;
+.values-header h2 {
+  font-size: 2.8rem;
+  color: var(--hpcl-blue);
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 2.5rem;
 }
 
 .values-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: left;
 }
 
 .value-card {
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  border-top: 3px solid #e31937;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-top: 3px solid var(--hpcl-red);
 }
 
 .value-card h3 {
-  color: #002d72;
+  font-size: 1.3rem;
+  color: var(--hpcl-blue);
   margin-bottom: 1rem;
 }
 
-/* CTA Section */
-.about-cta {
-  padding: 5rem 2rem;
-  background: linear-gradient(135deg, #002d72 0%, #0066cc 100%);
+.value-card p {
+  line-height: 1.7;
+  color: #444;
+}
+
+/* About Page CTA Section */
+.cta-section-about {
+  padding: 4rem 2rem;
+  background-color: var(--hpcl-blue);
   color: white;
   text-align: center;
 }
 
-.about-cta h2 {
+.cta-content-about h2 {
   font-size: 2.2rem;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
   margin-bottom: 2rem;
+  font-weight: 500;
 }
 
-.cta-buttons {
+.cta-buttons-about {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.primary-button-about, .secondary-button-about {
+  padding: 0.8rem 1.8rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.primary-button-about {
+  background-color: var(--hpcl-red);
+  color: white;
+}
+
+.primary-button-about:hover {
+  background-color: #c0142f;
+  transform: translateY(-2px);
+}
+
+.secondary-button-about {
+  background-color: transparent;
+  color: white;
+  border-color: white;
+}
+
+.secondary-button-about:hover {
+  background-color: white;
+  color: var(--hpcl-blue);
+  transform: translateY(-2px);
 }
 
 /* Responsive Design */
@@ -303,4 +383,185 @@
   .hero-content p {
     font-size: 1.2rem;
   }
+}
+
+.about-header {
+  position: relative;
+  padding: 4rem 2rem;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  background-image: url('../assets/images/refinery.jpeg');
+  color: white;
+}
+
+.header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 45, 114, 0.7); /* HPCL Blue with transparency */
+}
+
+.about-header h1 {
+  position: relative;
+  font-size: 2.8rem;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.about-header p {
+  position: relative;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: #ffcc00; /* HPCL Yellow */
+}
+
+.about-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.content-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 4px solid var(--hpcl-red);
+}
+
+.content-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.content-card h2 {
+  font-size: 1.5rem;
+  color: var(--hpcl-blue);
+  margin-bottom: 1rem;
+}
+
+.content-card p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #444;
+}
+
+.about-footer {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--hpcl-blue);
+  color: white;
+  font-weight: 500;
+}
+
+.about-page-timeline {
+  padding-top: 70px;
+  background-color: #f4f7f6;
+  min-height: calc(100vh - 70px);
+}
+
+.heritage-header {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.heritage-header h1 {
+  font-size: 2.8rem;
+  color: var(--hpcl-blue);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.timeline-section {
+  padding: 0 2rem 4rem 2rem;
+}
+
+.timeline-container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* The vertical line */
+.timeline-container::after {
+  content: '';
+  position: absolute;
+  width: 3px;
+  background-color: var(--hpcl-red);
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -1.5px;
+}
+
+.timeline-item {
+  padding: 10px 40px;
+  position: relative;
+  width: 50%;
+}
+
+/* The content card */
+.timeline-content {
+  padding: 1.5rem;
+  background-color: white;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Place items on left and right */
+.timeline-item:nth-child(odd) {
+  left: 0;
+  padding-left: 0;
+  padding-right: 60px; /* Space for the year */
+  text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+  left: 50%;
+  padding-right: 0;
+  padding-left: 60px; /* Space for the year */
+}
+
+.timeline-content h3 {
+  font-size: 1.25rem;
+  color: var(--hpcl-red);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.timeline-content p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* Arrow pointers on content cards */
+.timeline-content::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 22px;
+  width: 0;
+  z-index: 1;
+  border: medium solid white;
+}
+
+.timeline-item:nth-child(odd) .timeline-content::before {
+  right: -10px;
+  border-width: 10px 0 10px 10px;
+  border-color: transparent transparent transparent white;
+}
+
+.timeline-item:nth-child(even) .timeline-content::before {
+  left: -10px;
+  border-width: 10px 10px 10px 0;
+  border-color: transparent white transparent transparent;
 }

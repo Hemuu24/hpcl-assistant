@@ -1,23 +1,27 @@
 /* Navbar.css */
 
 .navbar {
-  background-color: #002d72; /* HPCL dark blue */
+  background-color: #002d72; /* HPCL Blue */
   color: white;
-  padding: 0.5rem 2rem;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: fixed;
-  width: 100%;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  border-bottom: 3px solid #e31937; /* HPCL red */
 }
 
 .navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1600px; /* Increased max-width */
 }
 
 .logo-container {
@@ -29,49 +33,62 @@
   display: flex;
   align-items: center;
   text-decoration: none;
+  color: white;
 }
 
 .logo {
-  height: 50px;
+  height: 45px; /* Slightly larger logo */
   margin-right: 15px;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1);
 }
 
 .system-title {
-  color: white;
-  font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.25rem; /* Larger title */
+  font-weight: 600; /* Bolder */
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .nav-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.5rem; /* Increased spacing */
+  align-items: center;
 }
 
 .nav-link {
   color: white;
   text-decoration: none;
+  font-size: 1rem;
   font-weight: 500;
-  padding: 0.5rem 0;
+  padding: 8px 12px;
+  border-radius: 4px;
   position: relative;
-  transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-  color: #e31937;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 0;
   height: 2px;
-  background-color: #e31937;
+  background-color: #ffcc00; /* HPCL Yellow */
   transition: width 0.3s ease;
 }
 
-.nav-link:hover::after {
+.nav-link:hover,
+.nav-link.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
@@ -91,7 +108,6 @@
 .auth-section {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
 }
 
 .user-status {
@@ -110,19 +126,18 @@
 }
 
 .dashboard-button {
-  background-color: #e31937;
+  background-color: #e31937; /* HPCL Red */
   color: white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 4px;
   text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
   font-weight: bold;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .dashboard-button:hover {
-  background-color: #c0102a;
+  background-color: #c0142f; /* Darker Red */
   transform: translateY(-2px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive Design */

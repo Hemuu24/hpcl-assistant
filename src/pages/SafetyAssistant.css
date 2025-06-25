@@ -239,6 +239,9 @@
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
+  border: 2px dashed #007bff;
+  padding: 8px;
+  background: #f5faff;
 }
 
 .file-upload-area input[type="file"] {

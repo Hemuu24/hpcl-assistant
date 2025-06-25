@@ -210,6 +210,56 @@ const SafetyAssistant = () => {
       </div>
 
       <div className="assistant-content">
+        <div className="report-hazard">
+          <div className="report-chat">
+            <h2>Safety Assistance Chat</h2>
+            <div className="chat-container">
+              <div className="chat-messages">
+                {chatHistory.length === 0 ? (
+                  <div className="empty-chat">
+                    <p>Ask me anything about safety documents.</p>
+                    <p className="example-text">e.g., "What are the PPE requirements for the processing area?"</p>
+                  </div>
+                ) : (
+                  chatHistory.map((chat, index) => (
+                    <div key={index} className={`chat-message ${chat.sender}`}>
+                      <p>{chat.text}</p>
+                    </div>
+                  ))
+                )}
+                {isLoading && <div className="loading-indicator">Bot is typing...</div>}
+              </div>
+              {error && <div className="error-message">{error}</div>}
+              <div className="chat-input-area">
+                <form className="file-upload-area" onSubmit={handleFileUpload}>
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    onChange={handleFileChange}
+                    disabled={isLoading}
+                  />
+                  <button type="submit" disabled={isLoading || !uploadFile}>
+                    Upload PDF
+                  </button>
+                  {uploadStatus && <span className="upload-status">{uploadStatus}</span>}
+                </form>
+                <div className="chat-input">
+                  <input
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Type your safety question..."
+                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  />
+                  <button onClick={handleSendMessage} disabled={isLoading}>
+                    {isLoading ? 'Sending...' : 'Send'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {activeTab === 'emergency' && (
           <div className="emergency-procedures">
             <h2>Emergency Response Procedures</h2>
@@ -250,82 +300,35 @@ const SafetyAssistant = () => {
         )}
 
         {activeTab === 'report' && (
-          <div className="report-hazard">
-            <div className="report-chat">
-              <h2>Safety Assistance Chat</h2>
-              <div className="chat-container">
-                <div className="chat-messages">
-                  {chatHistory.length === 0 ? (
-                    <div className="empty-chat">
-                      <p>Ask me anything about safety documents.</p>
-                      <p className="example-text">e.g., "What are the PPE requirements for the processing area?"</p>
-                    </div>
-                  ) : (
-                    chatHistory.map((chat, index) => (
-                      <div key={index} className={`chat-message ${chat.sender}`}>
-                        <p>{chat.text}</p>
-                      </div>
-                    ))
-                  )}
-                  {isLoading && <div className="loading-indicator">Bot is typing...</div>}
-                </div>
-                {error && <div className="error-message">{error}</div>}
-                <form className="file-upload-area" onSubmit={handleFileUpload}>
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    onChange={handleFileChange}
-                    disabled={isLoading}
-                  />
-                  <button type="submit" disabled={isLoading || !uploadFile}>
-                    Upload PDF
-                  </button>
-                  {uploadStatus && <span className="upload-status">{uploadStatus}</span>}
-                </form>
-                <div className="chat-input">
-                  <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Type your safety question..."
-                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                  />
-                  <button onClick={handleSendMessage} disabled={isLoading}>
-                    {isLoading ? 'Sending...' : 'Send'}
-                  </button>
-                </div>
+          <div className="quick-report">
+            <h3>Quick Hazard Report</h3>
+            <form className="report-form" onSubmit={handleReportSubmit}>
+              <select value={hazardType} onChange={e => setHazardType(e.target.value)} required>
+                <option value="">Select hazard type</option>
+                <option value="fire">Fire hazard</option>
+                <option value="chemical">Chemical spill</option>
+                <option value="equipment">Equipment failure</option>
+                <option value="other">Other safety concern</option>
+              </select>
+              <select value={hazardLocation} onChange={e => setHazardLocation(e.target.value)} required>
+                <option value="">Select location</option>
+                {mapData?.nodes.map((node: Node) => (
+                  <option key={node.id} value={node.id}>{node.name}</option>
+                ))}
+              </select>
+              <textarea
+                placeholder="Describe the hazard details..."
+                value={hazardDescription}
+                onChange={e => setHazardDescription(e.target.value)}
+                required
+              ></textarea>
+              <div className="form-actions">
+                <button type="submit" className="primary-button">
+                  Submit Report
+                </button>
               </div>
-            </div>
-            <div className="quick-report">
-              <h3>Quick Hazard Report</h3>
-              <form className="report-form" onSubmit={handleReportSubmit}>
-                <select value={hazardType} onChange={e => setHazardType(e.target.value)} required>
-                  <option value="">Select hazard type</option>
-                  <option value="fire">Fire hazard</option>
-                  <option value="chemical">Chemical spill</option>
-                  <option value="equipment">Equipment failure</option>
-                  <option value="other">Other safety concern</option>
-                </select>
-                <select value={hazardLocation} onChange={e => setHazardLocation(e.target.value)} required>
-                  <option value="">Select location</option>
-                  {mapData?.nodes.map((node: Node) => (
-                    <option key={node.id} value={node.id}>{node.name}</option>
-                  ))}
-                </select>
-                <textarea
-                  placeholder="Describe the hazard details..."
-                  value={hazardDescription}
-                  onChange={e => setHazardDescription(e.target.value)}
-                  required
-                ></textarea>
-                <div className="form-actions">
-                  <button type="submit" className="primary-button">
-                    Submit Report
-                  </button>
-                </div>
-                {reportStatus && <p className="upload-status">{reportStatus}</p>}
-              </form>
-            </div>
+              {reportStatus && <p className="upload-status">{reportStatus}</p>}
+            </form>
           </div>
         )}
       </div>

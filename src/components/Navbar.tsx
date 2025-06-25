@@ -1,16 +1,26 @@
 // components/Navbar.tsx
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import hpclLogo from "../assets/images/hpcl-logo.png";
 import "./Navbar.css";
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onLogout: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
+  const navigate = useNavigate();
+
+  const handleLogoutClick = () => {
+    onLogout();
+    navigate('/login');
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
         {/* Logo and Title */}
         <div className="logo-container">
-          <Link to="/" className="logo-title-container">
+          <Link to="/dashboard" className="logo-title-container">
             <img src={hpclLogo} alt="HPCL" className="logo" />
             <span className="system-title">Emergency Response System</span>
           </Link>
@@ -18,20 +28,15 @@ const Navbar: React.FC = () => {
 
         {/* Navigation Links */}
         <div className="nav-links">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About</Link>
+          <Link to="/dashboard" className="nav-link">Dashboard</Link>
           <Link to="/safety-assistant" className="nav-link">Safety Assistant</Link>
-          <Link to="/policies" className="nav-link">HPCL Policies</Link>
+          <Link to="/policies" className="nav-link">Policies</Link>
           <Link to="/emergency-routing" className="nav-link emergency-link">Emergency Routing</Link>
         </div>
 
         {/* User Section */}
         <div className="auth-section">
-          <div className="user-status">
-            <span className="user-indicator"></span>
-            <a href="/#operations-section" className="nav-link">Refinery Operations</a>
-          </div>
-          <Link to="/dashboard" className="dashboard-button">Control Panel</Link>
+          <button onClick={handleLogoutClick} className="dashboard-button">Logout</button>
         </div>
       </div>
     </nav>

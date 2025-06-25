@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 import sliderImage1 from '../assets/images/sliderimage1.jpg';
@@ -12,6 +12,7 @@ import operationImage2 from '../assets/images/sliderimage3.jpeg';
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const operationsRef = useRef<HTMLDivElement>(null);
 
   const sliderImages = [sliderImage1, sliderImage2, sliderImage3, sliderImage4, sliderImage5];
   const operationImages = [operationImage1, operationImage2];
@@ -34,11 +35,8 @@ const LandingPage: React.FC = () => {
     };
   }, [sliderImages.length]);
 
-  const handleScrollToOperations = () => {
-    const operationsSection = document.getElementById('operations-section');
-    if (operationsSection) {
-      operationsSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const handleLoginRedirect = () => {
+    navigate('/login');
   };
 
   return (

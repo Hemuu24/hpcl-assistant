@@ -1,164 +1,53 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../pages/AboutPage.css';
-import refineryImage from '../assets/images/sliderimage1.jpg';
-import teamImage from '../assets/images/sliderimage2.jpg';
-import safetyImage from '../assets/images/sliderimage3.jpeg';
+import './AboutPage.css';
 
 const AboutPage = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="about-page">
-      {/* Hero Section */}
-      <section className="about-hero">
-        <div className="hero-overlay"></div>
-        <div className="hero-content">
-          <h1>About HPCL Visakh Safety Systems</h1>
-          <p>Pioneering refinery safety through innovation and technology</p>
-        </div>
-      </section>
-
-      {/* Mission Section */}
-      <section className="mission-section">
-        <div className="mission-container">
-          <div className="mission-content">
-            <h2>Our Mission</h2>
-            <div className="mission-statement">
-              <p>
-                To deliver world-class safety solutions that protect our workforce, 
-                environment, and assets through cutting-edge technology and 
-                operational excellence.
-              </p>
-            </div>
-            <button 
-              className="primary-button"
-              onClick={() => navigate('/safety-manuals')}
-            >
-              View Our Safety Protocols
-            </button>
-          </div>
-          <div className="mission-image">
-            <img src={refineryImage} alt="HPCL Visakh Refinery" />
-          </div>
-        </div>
-      </section>
-
-      {/* History Section */}
-      <section className="history-section">
-        <h2>Our Heritage</h2>
-        <div className="timeline">
-          <div className="timeline-item">
-            <div className="timeline-year">1957</div>
-            <div className="timeline-content">
-              <h3>Refinery Established</h3>
-              <p>
-                HPCL Visakh Refinery commenced operations with an initial capacity 
-                of 0.65 MMTPA, marking the beginning of our safety journey.
-              </p>
-            </div>
-          </div>
-          <div className="timeline-item">
-            <div className="timeline-year">1999</div>
-            <div className="timeline-content">
-              <h3>First Safety Management System</h3>
-              <p>
-                Implemented our first comprehensive safety management system, 
-                setting industry benchmarks.
-              </p>
-            </div>
-          </div>
-          <div className="timeline-item">
-            <div className="timeline-year">2023</div>
-            <div className="timeline-content">
-              <h3>AI-Powered Safety Platform</h3>
-              <p>
-                Launched our current generation predictive safety and emergency 
-                response system.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="team-section">
-        <div className="section-header">
-          <h2>Our Safety Leadership</h2>
+      <header className="about-header">
+        <div className="header-overlay"></div>
+        <h1>About HPCL Visakh Refinery</h1>
+        <p>A cornerstone of India's energy sector since 1957</p>
+      </header>
+      
+      <section className="about-content">
+        <div className="content-card">
+          <h2>Our History & Legacy</h2>
           <p>
-            Dedicated professionals ensuring operational safety at every level
+            Commissioned in 1957, the Visakh Refinery is one of the oldest and most strategic refineries in India. 
+            Originally established as Caltex Oil Refining (India) Ltd., it was nationalized in 1976 and became part of the Hindustan Petroleum Corporation Limited (HPCL) family.
+            Over the decades, it has undergone numerous upgrades and expansions to become a modern, high-complexity facility, currently boasting a capacity of 8.3 MMTPA.
           </p>
         </div>
-        <div className="team-grid">
-          <div className="team-card">
-            <div className="team-image-container">
-              <img src={teamImage} alt="Safety Team" />
-            </div>
-            <h3>Safety Operations</h3>
-            <p>
-              150+ certified safety officers monitoring operations 24/7 with 
-              advanced surveillance systems.
-            </p>
-          </div>
-          <div className="team-card">
-            <div className="team-image-container">
-              <img src={safetyImage} alt="Technical Team" />
-            </div>
-            <h3>Technical Experts</h3>
-            <p>
-              Process safety engineers with an average of 15+ years experience 
-              in refinery operations.
-            </p>
-          </div>
+
+        <div className="content-card">
+          <h2>Commitment to Safety</h2>
+          <p>
+            Safety is not just a priority; it is a core value that drives every aspect of our operations. 
+            We are committed to achieving a zero-incident workplace through continuous improvement of our processes, state-of-the-art technology, and comprehensive training for all our personnel.
+            This Emergency Response System is a testament to our proactive approach to managing and mitigating risks effectively.
+          </p>
+        </div>
+
+        <div className="content-card">
+          <h2>Technological Excellence</h2>
+          <p>
+            The Visakh Refinery is equipped with advanced processing units, including a Fluidized Catalytic Cracker (FCC), hydrocrackers, and diesel hydro-treating units. 
+            We leverage cutting-edge digital technologies, from advanced process control to AI-driven predictive maintenance, to ensure operational efficiency, reliability, and environmental compliance.
+          </p>
+        </div>
+
+        <div className="content-card">
+          <h2>Environmental Stewardship</h2>
+          <p>
+            As a responsible corporate citizen, we are dedicated to minimizing our environmental footprint. 
+            The refinery has implemented extensive environmental management programs, including low-NOx burners, an advanced effluent treatment plant, and a robust leak detection and repair (LDAR) program, all compliant with the latest national and international standards.
+          </p>
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="values-section">
-        <h2>Our Core Values</h2>
-        <div className="values-grid">
-          <div className="value-card">
-            <h3>Safety First</h3>
-            <p>
-              Every decision begins with safety considerations for our people, 
-              community, and environment.
-            </p>
-          </div>
-          <div className="value-card">
-            <h3>Innovation</h3>
-            <p>
-              Continuously evolving our systems with the latest safety technologies 
-              and best practices.
-            </p>
-          </div>
-          <div className="value-card">
-            <h3>Accountability</h3>
-            <p>
-              Clear safety responsibilities at all organizational levels with 
-              transparent reporting.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="about-cta">
-        <h2>Join Us in Setting Safety Standards</h2>
-        <div className="cta-buttons">
-          <button 
-            className="primary-button"
-            onClick={() => navigate('/contact')}
-          >
-            Contact Our Safety Team
-          </button>
-          <button 
-            className="secondary-button"
-            onClick={() => navigate('/careers')}
-          >
-            Safety Career Opportunities
-          </button>
-        </div>
-      </section>
+      <footer className="about-footer">
+        <p>HPCL Visakh Refinery - Powering the Nation, Protecting our People.</p>
+      </footer>
     </div>
   );
 };

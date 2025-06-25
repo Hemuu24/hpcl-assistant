@@ -1,75 +1,34 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Footer.css';
+import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer className="hpcl-footer">
+    <footer className="footer">
       <div className="footer-container">
-        {/* Main Footer Content */}
-        <div className="footer-grid">
-          {/* About Column */}
-          <div className="footer-column">
-            <h3 className="footer-heading">About HPCL Visakh</h3>
-            <p className="footer-about">
-              HPCL Visakh Refinery is one of India's largest coastal refineries with 
-              a capacity of 8.3 MMTPA, serving the nation's energy needs since 1957.
-            </p>
-            <div className="footer-contact">
-              <p>Visakhapatnam, Andhra Pradesh</p>
-              <p>India - 530001</p>
-            </div>
-          </div>
-
-          {/* Quick Links Column */}
-          <div className="footer-column">
-            <h3 className="footer-heading">Quick Links</h3>
-            <ul className="footer-links">
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/dashboard">Dashboard</Link></li>
-              <li><Link to="/emergency-routing">Emergency Protocols</Link></li>
-              <li><Link to="/safety-manuals">Safety Manuals</Link></li>
-              <li><Link to="/about">About Us</Link></li>
-            </ul>
-          </div>
-
-          {/* Emergency Contacts Column */}
-          <div className="footer-column">
-            <h3 className="footer-heading">Emergency Contacts</h3>
-            <ul className="emergency-contacts">
-              <li>Control Room: <span>+91-891-2567890</span></li>
-              <li>Medical Emergency: <span>+91-891-2567891</span></li>
-              <li>Fire Station: <span>+91-891-2567892</span></li>
-              <li>Security: <span>+91-891-2567893</span></li>
-            </ul>
-          </div>
-
-          {/* Social/External Links Column */}
-          <div className="footer-column">
-            <h3 className="footer-heading">Connect With Us</h3>
-            <div className="footer-social">
-              <a href="https://www.hindustanpetroleum.com" target="_blank" rel="noopener noreferrer">
-                Official Website
-              </a>
-              <a href="mailto:visakhrefinery@hpcl.in" target="_blank" rel="noopener noreferrer">
-                Email Us
-              </a>
-            </div>
-            <div className="footer-legal">
-              <Link to="/privacy">Privacy Policy</Link>
-              <Link to="/terms">Terms of Use</Link>
-            </div>
-          </div>
+        <div className="footer-section">
+          <h4>HPCL Visakh Refinery</h4>
+          <p>Emergency Response System</p>
+          <p>Kutcha Rd, Visakhapatnam, Andhra Pradesh 530011</p>
         </div>
-
-        {/* Copyright Section */}
-        <div className="footer-bottom">
-          <div className="footer-copyright">
-            &copy; {new Date().getFullYear()} HPCL Visakh Refinery. All Rights Reserved.
-          </div>
-          <div className="footer-credits">
-            <span>Safety Management System v2.0</span>
-          </div>
+        <div className="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/dashboard">Control Panel</a></li>
+            <li><a href="/policies">Safety Policies</a></li>
+            <li><a href="/emergency-routing">Emergency Routes</a></li>
+          </ul>
+        </div>
+        <div className="footer-section">
+          <h4>Emergency Contacts</h4>
+          <ul>
+            <li>Control Room: <strong>Ext. 5555</strong></li>
+            <li>Medical: <strong>Ext. 2222</strong></li>
+            <li>Security: <strong>Ext. 1111</strong></li>
+          </ul>
+        </div>
+        <div className="footer-section">
+          <h4>Legal</h4>
+          <p>HPCL Internal Use Only</p>
+          <p>&copy; {new Date().getFullYear()} Hindustan Petroleum Corporation Ltd.</p>
         </div>
       </div>
     </footer>

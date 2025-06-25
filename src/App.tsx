@@ -1,63 +1,50 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LandingPage from './pages/Landingpage';
-import AuthForm from './pages/Signin';
-import AboutPage from './pages/AboutPage';
-import SafetyAssistant from './pages/SafetyAssistant';
+import DashboardPage from './pages/DashboardPage';
+import SafetyManualsPage from './pages/SafetyManualsPage';
 import PoliciesPage from './pages/PoliciesPage';
-import DashboardPage from './pages/DashboardPage'; // ✅ Import DashboardPage
 import EmergencyRoutingPage from './pages/EmergencyRoutingPage';
-import './App.css';
+import SafetyAssistant from './pages/SafetyAssistant';
+import AboutPage from './pages/AboutPage';
+import AuthForm from './pages/Signin';
 
-const App = () => {
-  const [isSignup, setIsSignup] = useState(false);
+function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('loggedIn') === 'true');
+
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('loggedIn');
+    setIsAuthenticated(false);
+  };
 
   return (
     <Router>
-      <div className="app-container">
-        <Navbar />
-
-        <div className="content-wrapper">
+      <div className="App">
+        {isAuthenticated && <Navbar onLogout={handleLogout} />}
+        <main>
           <Routes>
-            <Route path="/" element={<LandingPage />} />
-
-            <Route
-              path="/login"
-              element={
-                <AuthForm
-                  isSignup={false}
-                  onSwitch={() => setIsSignup(true)}
-                  onSuccess={() => (window.location.href = '/dashboard')}
-                />
-              }
-            />
-
-            <Route
-              path="/signup"
-              element={
-                <AuthForm
-                  isSignup={true}
-                  onSwitch={() => setIsSignup(false)}
-                  onSuccess={() => (window.location.href = '/dashboard')}
-                />
-              }
-            />
-
-            {/* ✅ Integrated DashboardPage here */}
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/emergency-routing" element={<EmergencyRoutingPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/safety-assistant" element={<SafetyAssistant />} />
-            <Route path="/policies" element={<PoliciesPage />} />
+            <Route path="/login" element={!isAuthenticated ? <AuthForm isSignup={false} onSwitch={() => {}} onSuccess={handleLogin} /> : <Navigate to="/dashboard" />} />
+            <Route path="/" element={!isAuthenticated ? <LandingPage /> : <Navigate to="/dashboard" />} />
+            <Route path="/dashboard" element={isAuthenticated ? <DashboardPage /> : <Navigate to="/login" />} />
+            <Route path="/safety-manuals" element={isAuthenticated ? <SafetyManualsPage /> : <Navigate to="/login" />} />
+            <Route path="/policies" element={isAuthenticated ? <PoliciesPage /> : <Navigate to="/login" />} />
+            <Route path="/emergency-routing" element={isAuthenticated ? <EmergencyRoutingPage /> : <Navigate to="/login" />} />
+            <Route path="/safety-assistant" element={isAuthenticated ? <SafetyAssistant /> : <Navigate to="/login" />} />
+            <Route path="/about" element={isAuthenticated ? <AboutPage /> : <Navigate to="/login" />} />
+            <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} />} />
           </Routes>
-        </div>
-
-        <Footer />
+        </main>
+        {isAuthenticated && <Footer />}
       </div>
     </Router>
   );
-};
+}
 
 export default App;

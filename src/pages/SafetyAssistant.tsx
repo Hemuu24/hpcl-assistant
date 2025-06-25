@@ -13,8 +13,6 @@ const SafetyAssistant = () => {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [uploadStatus, setUploadStatus] = useState<string>('');
   const [hazardType, setHazardType] = useState('');
   const [hazardDescription, setHazardDescription] = useState('');
   const [hazardLocation, setHazardLocation] = useState('');
@@ -104,41 +102,6 @@ const SafetyAssistant = () => {
       setChatHistory(prev => [...prev, botMessage]);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setSelectedFile(event.target.files[0]);
-      setUploadStatus('');
-    }
-  };
-
-  const handleFileUpload = async () => {
-    if (!selectedFile) {
-      setUploadStatus('Please select a file first.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    setUploadStatus('Uploading...');
-
-    try {
-      const response = await fetch('http://localhost:5000/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('File upload failed.');
-      }
-
-      const data = await response.json();
-      setUploadStatus(data.message || 'File uploaded successfully.');
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
-      setUploadStatus(`Error: ${errorMessage}`);
     }
   };
 

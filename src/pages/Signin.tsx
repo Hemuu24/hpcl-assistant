@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { FC } from "react";
-import "./AuthForm.css";
+import "./Authform.css";
 import hpclLogo from "../assets/images/hpcl-logo.png"; // Ensure the file is renamed without spaces
 
 interface AuthFormProps {

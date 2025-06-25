@@ -22,6 +22,8 @@ const SafetyAssistant = () => {
   const [hazardDescription, setHazardDescription] = useState('');
   const [hazardLocation, setHazardLocation] = useState('');
   const [reportStatus, setReportStatus] = useState('');
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploadStatus, setUploadStatus] = useState<string>('');
 
   useEffect(() => {
     fetch('/refinery_map.json')
@@ -90,7 +92,7 @@ const SafetyAssistant = () => {
     setError(null);
 
     try {
-      const response = await fetch('https://hpcl-assistant-backend.onrender.com/ask', {
+      const response = await fetch('https://6b62-2405-201-c01b-a93b-62bf-b1b6-7e51-7acd.ngrok-free.app/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +126,7 @@ const SafetyAssistant = () => {
     }
     setReportStatus('Submitting...');
     try {
-      const response = await fetch('https://hpcl-assistant-backend.onrender.com/report-incident', {
+      const response = await fetch('https://6b62-2405-201-c01b-a93b-62bf-b1b6-7e51-7acd.ngrok-free.app/report-incident', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -144,6 +146,38 @@ const SafetyAssistant = () => {
       }
     } catch (err) {
       setReportStatus('Error submitting report.');
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setUploadFile(e.target.files[0]);
+    }
+  };
+
+  const handleFileUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!uploadFile) {
+      setUploadStatus('Please select a PDF file.');
+      return;
+    }
+    setUploadStatus('Uploading...');
+    const formData = new FormData();
+    formData.append('file', uploadFile);
+    try {
+      const response = await fetch('https://6b62-2405-201-c01b-a93b-62bf-b1b6-7e51-7acd.ngrok-free.app/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      if (response.ok) {
+        setUploadStatus('File uploaded and indexed successfully!');
+        setUploadFile(null);
+      } else {
+        const data = await response.json();
+        setUploadStatus(data.error || 'Failed to upload file.');
+      }
+    } catch (err) {
+      setUploadStatus('Error uploading file.');
     }
   };
 
@@ -236,6 +270,18 @@ const SafetyAssistant = () => {
                   {isLoading && <div className="loading-indicator">Bot is typing...</div>}
                 </div>
                 {error && <div className="error-message">{error}</div>}
+                <form className="file-upload-area" onSubmit={handleFileUpload}>
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    onChange={handleFileChange}
+                    disabled={isLoading}
+                  />
+                  <button type="submit" disabled={isLoading || !uploadFile}>
+                    Upload PDF
+                  </button>
+                  {uploadStatus && <span className="upload-status">{uploadStatus}</span>}
+                </form>
                 <div className="chat-input">
                   <input
                     type="text"

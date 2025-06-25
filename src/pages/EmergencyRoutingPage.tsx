@@ -64,7 +64,7 @@ const EmergencyRoutingPage: React.FC = () => {
 
   // Fetch incidents
   useEffect(() => {
-    fetch('http://localhost:5000/incidents')
+    fetch('https://hpcl-assistant-backend.onrender.com/incidents')
       .then(res => res.json())
       .then(data => setIncidents(data.incidents || []));
   }, []);
@@ -123,7 +123,7 @@ const EmergencyRoutingPage: React.FC = () => {
     setLoading(true);
     setRoute([]); // Clear previous route
     try {
-      const response = await fetch('http://localhost:5000/route', {
+      const response = await fetch('https://hpcl-assistant-backend.onrender.com/route', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

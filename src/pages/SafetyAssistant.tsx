@@ -90,7 +90,7 @@ const SafetyAssistant = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:5000/ask', {
+      const response = await fetch('https://hpcl-assistant-backend.onrender.com/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ const SafetyAssistant = () => {
     }
     setReportStatus('Submitting...');
     try {
-      const response = await fetch('http://localhost:5000/report-incident', {
+      const response = await fetch('https://hpcl-assistant-backend.onrender.com/report-incident', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

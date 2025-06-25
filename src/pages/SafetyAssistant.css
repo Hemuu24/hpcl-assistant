@@ -1,0 +1,393 @@
+.safety-assistant-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.safety-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.safety-header h1 {
+  color: #0066cc;
+  margin-bottom: 10px;
+}
+
+.safety-header p {
+  color: #666;
+  font-size: 1.1em;
+}
+
+.assistant-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 12px 24px;
+  margin: 0 5px;
+  font-size: 1em;
+  cursor: pointer;
+  color: #666;
+  border-radius: 4px 4px 0 0;
+  transition: all 0.3s ease;
+}
+
+.tab-button.active {
+  color: #0066cc;
+  background-color: #f0f7ff;
+  font-weight: 600;
+  border-bottom: 3px solid #0066cc;
+}
+
+.assistant-content {
+  background: white;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+/* Emergency Procedures */
+.procedure-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.procedure-card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  border-left: 4px solid #0066cc;
+}
+
+.procedure-card h3 {
+  color: #0066cc;
+  margin-top: 0;
+}
+
+.steps-list {
+  padding-left: 20px;
+}
+
+.steps-list li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.procedure-button {
+  background: #0066cc;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.3s ease;
+}
+
+.procedure-button:hover {
+  background: #0052a3;
+}
+
+/* Safety Protocols */
+.protocols-container {
+  margin-top: 20px;
+}
+
+.protocol-section {
+  margin-bottom: 30px;
+}
+
+.protocol-section h3 {
+  color: #0066cc;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+
+.protocol-list {
+  padding-left: 20px;
+}
+
+.protocol-list li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+/* Report Hazard */
+.report-hazard {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.report-chat {
+  flex: none;
+  width: 100%;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.report-chat h2 {
+  padding: 1rem 1.5rem;
+  margin: 0;
+  color: #002d72;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 1.2rem;
+}
+
+.chat-container {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  flex-grow: 1;
+  overflow-y: auto;
+  border: none;
+}
+
+.message {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.message.user {
+  align-items: flex-end;
+}
+
+.message.bot {
+  align-items: flex-start;
+}
+
+.message .text-bubble {
+  max-width: 80%;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  line-height: 1.5;
+}
+
+.message.user .text-bubble {
+  background: #007bff;
+  color: white;
+  border-top-right-radius: 0;
+}
+
+.message.bot .text-bubble {
+  background: #e9ecef;
+  color: #333;
+  border-top-left-radius: 0;
+}
+
+.typing-indicator {
+  display: flex;
+  padding: 0.8rem 1rem;
+}
+
+.typing-indicator span {
+  height: 8px;
+  width: 8px;
+  background-color: #aaa;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 2px;
+  animation: bounce 1s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-5px); }
+}
+
+.chat-input-area {
+  padding: 1rem;
+  border-top: 1px solid #e9ecef;
+  background: #fff;
+}
+
+.file-upload-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.file-upload-area input[type="file"] {
+  /* Hiding default input, we can style the label instead if needed */
+}
+
+.file-upload-area button {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.file-upload-area button:hover {
+  background: #5a6268;
+}
+
+.upload-status {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #28a745;
+}
+
+.chat-input {
+  display: flex;
+  gap: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  padding: 0.25rem;
+}
+
+.chat-input input {
+  border: none;
+  flex-grow: 1;
+  padding: 0.5rem;
+  outline: none;
+  background: transparent;
+}
+
+.chat-input button {
+  background-color: #007bff;
+  min-width: 80px;
+}
+.chat-input button:disabled {
+  background-color: #a0cfff;
+}
+
+.quick-report {
+  width: 100%;
+  max-width: 800px;
+}
+
+.quick-report h3 {
+  margin-top: 0;
+  color: #0066cc;
+}
+
+.report-form select, .report-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+.report-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.primary-button {
+  background: #0066cc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.primary-button:hover {
+  background: #0052a3;
+}
+
+.secondary-button {
+  background: white;
+  color: #0066cc;
+  border: 1px solid #0066cc;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+  background: #f0f7ff;
+}
+
+/* Emergency Contacts */
+.emergency-contacts {
+  margin-top: 40px;
+}
+
+.emergency-contacts h2 {
+  text-align: center;
+  color: #0066cc;
+  margin-bottom: 20px;
+}
+
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.contact-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border-top: 4px solid #cc0000;
+}
+
+.contact-card h3 {
+  color: #cc0000;
+  margin-top: 0;
+}
+
+.contact-card p {
+  margin: 8px 0;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .report-hazard {
+    grid-template-columns: 1fr;
+  }
+  
+  .procedure-grid {
+    grid-template-columns: 1fr;
+  }
+}

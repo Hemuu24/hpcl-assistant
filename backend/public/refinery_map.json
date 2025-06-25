@@ -1,0 +1,29 @@
+{
+  "nodes": [
+    { "id": "G", "name": "Main Gate", "lat": 17.6890, "lon": 83.2465 },
+    { "id": "X1", "name": "Intersection 1", "lat": 17.6895, "lon": 83.2455 },
+    { "id": "X2", "name": "Intersection 2", "lat": 17.6905, "lon": 83.2445 },
+    { "id": "E", "name": "Admin Building", "lat": 17.6900, "lon": 83.2450 },
+    { "id": "X3", "name": "Intersection 3", "lat": 17.6910, "lon": 83.2440 },
+    { "id": "A", "name": "Crude Distillation Unit", "lat": 17.6919, "lon": 83.2424 },
+    { "id": "B", "name": "Fluid Catalytic Cracker", "lat": 17.6930, "lon": 83.2435 },
+    { "id": "C", "name": "Storage Tank Farm A", "lat": 17.6910, "lon": 83.2438 },
+    { "id": "D", "name": "Hydrocracker Unit", "lat": 17.6925, "lon": 83.2448 },
+    { "id": "F", "name": "Utility Block", "lat": 17.6940, "lon": 83.2455 }
+  ],
+  "edges": [
+    { "from": "G", "to": "X1", "weight": 1 },
+    { "from": "X1", "to": "X2", "weight": 1 },
+    { "from": "X2", "to": "E", "weight": 1 },
+    { "from": "X2", "to": "X3", "weight": 1 },
+    { "from": "E", "to": "X3", "weight": 1 },
+    { "from": "X3", "to": "A", "weight": 1 },
+    { "from": "X3", "to": "C", "weight": 1 },
+    { "from": "A", "to": "B", "weight": 2 },
+    { "from": "B", "to": "D", "weight": 1 },
+    { "from": "B", "to": "F", "weight": 2 },
+    { "from": "C", "to": "D", "weight": 2 },
+    { "from": "C", "to": "E", "weight": 3 },
+    { "from": "D", "to": "F", "weight": 1 }
+  ]
+} 

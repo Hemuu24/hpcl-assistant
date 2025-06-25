@@ -1,0 +1,10 @@
+flask
+flask-cors
+PyPDF2
+sentence-transformers
+faiss-cpu
+numpy
+gunicorn
+nltk
+google-generativeai
+python-dotenv 

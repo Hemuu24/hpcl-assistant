@@ -1,0 +1,11 @@
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Uploads and embeddings
+/data/
+/embeddings/
+/HPCL_Safety_Manual_Test.pdf 

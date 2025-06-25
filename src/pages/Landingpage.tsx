@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
+import hpclLogo from '../assets/images/hpcl-logo.png';
 import sliderImage1 from '../assets/images/sliderimage1.jpg';
 import sliderImage2 from '../assets/images/sliderimage2.jpg';
 import sliderImage3 from '../assets/images/sliderimage3.jpeg';
@@ -9,38 +10,35 @@ import sliderImage5 from '../assets/images/sliderimage5.jpeg';
 import operationImage1 from '../assets/images/sliderimage1.jpg';
 import operationImage2 from '../assets/images/sliderimage3.jpeg';
 
-const LandingPage: React.FC = () => {
+const LandingPage = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const operationsRef = useRef<HTMLDivElement>(null);
-
+  
   const sliderImages = [sliderImage1, sliderImage2, sliderImage3, sliderImage4, sliderImage5];
   const operationImages = [operationImage1, operationImage2];
 
   useEffect(() => {
-    const sliderInterval = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % sliderImages.length);
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
     }, 5000);
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => entry.target.classList.toggle('animate', entry.isIntersecting));
-    }, { threshold: 0.1 });
-
-    const elements = document.querySelectorAll('.feature-card, .stats-item, .operation-card');
-    elements.forEach(el => observer.observe(el));
-
-    return () => {
-      clearInterval(sliderInterval);
-      elements.forEach(el => observer.unobserve(el));
-    };
+    return () => clearInterval(timer);
   }, [sliderImages.length]);
-
-  const handleLoginRedirect = () => {
-    navigate('/login');
-  };
 
   return (
     <div className="landing-page">
+      {/* Navbar Placeholder */}
+      <nav className="landing-nav">
+        <div className="nav-container">
+          <div className="nav-logo">
+            <img src={hpclLogo} alt="HPCL Logo" />
+            <span>HPCL Emergency System</span>
+          </div>
+          <div className="nav-actions">
+            <button onClick={() => navigate('/login')} className="login-btn">Employee Login</button>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Slider Section */}
       <section className="hero-section">
         <div className="slider-container">

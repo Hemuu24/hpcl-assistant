@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './DashboardPage.css';
 
-const Dashboard = () => {
+const DashboardPage = () => {
   const [timeRange, setTimeRange] = useState('24h');
   const [activeTab, setActiveTab] = useState('overview');
 
@@ -209,4 +208,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPage;

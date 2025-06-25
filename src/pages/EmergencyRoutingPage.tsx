@@ -25,7 +25,6 @@ const EmergencyRoutingPage: React.FC = () => {
   const [mapData, setMapData] = useState<{ nodes: Node[] } | null>(null);
   const [incidents, setIncidents] = useState<Incident[]>([]);
   const [fromNode, setFromNode] = useState<string>('G');
-  const [toNode, setToNode] = useState<string>('');
   const [route, setRoute] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const mapRef = useRef<LeafletMap | null>(null);
@@ -124,7 +123,7 @@ const EmergencyRoutingPage: React.FC = () => {
 
   const handleRoute = async (start?: string, end?: string) => {
     const from = start || fromNode;
-    const to = end || toNode;
+    const to = end;
 
     if (!from || !to) {
       alert("Please select a start and destination.");

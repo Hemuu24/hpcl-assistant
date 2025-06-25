@@ -2,13 +2,32 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PoliciesPage.css';
 
+// Define a type for a single policy
+interface Policy {
+  id: number;
+  title: string;
+  description: string;
+  lastUpdated: string;
+  content: string[];
+}
+
+// Define the structure of the policy categories
+interface PolicyCategories {
+  safety: Policy[];
+  environmental: Policy[];
+  emergency: Policy[];
+}
+
+// Define a type for the keys of policyCategories, which are our tab names
+type ActiveTab = keyof PolicyCategories;
+
 const PoliciesPage = () => {
-  const [activeTab, setActiveTab] = useState('safety');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('safety');
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedPolicy, setExpandedPolicy] = useState<number | null>(null);
 
   // Policy data with full content
-  const policyCategories = {
+  const policyCategories: PolicyCategories = {
     safety: [
       { 
         id: 1,
@@ -100,7 +119,7 @@ const PoliciesPage = () => {
     ]
   };
 
-  const filteredPolicies = policyCategories[activeTab].filter(policy =>
+  const filteredPolicies = policyCategories[activeTab].filter((policy: Policy) =>
     policy.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     policy.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -159,7 +178,7 @@ const PoliciesPage = () => {
         {/* Policies List */}
         <div className="policies-list">
           {filteredPolicies.length > 0 ? (
-            filteredPolicies.map((policy) => (
+            filteredPolicies.map((policy: Policy) => (
               <div 
                 key={policy.id} 
                 className={`policy-card ${expandedPolicy === policy.id ? 'expanded' : ''}`}
@@ -184,7 +203,7 @@ const PoliciesPage = () => {
                 {expandedPolicy === policy.id && (
                   <div className="policy-content">
                     <div className="content-section">
-                      {policy.content.map((item, index) => (
+                      {policy.content.map((item: string, index: number) => (
                         <p key={index} className={item === "" ? "content-spacer" : "content-item"}>
                           {item}
                         </p>

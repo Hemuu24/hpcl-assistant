@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { ChangeEvent, FC } from "react";
+import type { FC } from "react";
 import "./AuthForm.css";
 import hpclLogo from "../assets/images/hpcl-logo.png"; // Ensure the file is renamed without spaces
 

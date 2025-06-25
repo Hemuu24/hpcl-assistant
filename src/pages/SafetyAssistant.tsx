@@ -248,49 +248,31 @@ const SafetyAssistant = () => {
               <div className="chat-container">
                 <div className="chat-messages">
                   {chatHistory.length === 0 ? (
-                    <div className="welcome-message">
-                      <p>Welcome to HPCL Safety Assistant. How can I help you today?</p>
-                      <p>You can ask about:</p>
-                      <ul>
-                        <li>Fire emergency procedures</li>
-                        <li>Chemical spill response</li>
-                        <li>Medical emergency protocols</li>
-                        <li>Safety equipment requirements</li>
-                      </ul>
+                    <div className="empty-chat">
+                      <p>Ask me anything about safety documents.</p>
+                      <p className="example-text">e.g., "What are the PPE requirements for the processing area?"</p>
                     </div>
                   ) : (
-                    chatHistory.map((msg, index) => (
-                      <div key={index} className={`message ${msg.sender}`}>
-                        <div className="text-bubble">{msg.text}</div>
+                    chatHistory.map((chat, index) => (
+                      <div key={index} className={`chat-message ${chat.sender}`}>
+                        <p>{chat.text}</p>
                       </div>
                     ))
                   )}
-                  {isLoading && (
-                    <div className="message bot">
-                      <div className="typing-indicator">
-                        <span></span><span></span><span></span>
-                      </div>
-                    </div>
-                  )}
+                  {isLoading && <div className="loading-indicator">Bot is typing...</div>}
                 </div>
-                <div className="chat-input-area">
-                  <div className="file-upload-area">
-                    <input type="file" id="file-upload" onChange={handleFileChange} accept=".pdf" />
-                    <button onClick={handleFileUpload}>Upload Document</button>
-                    {uploadStatus && <p className="upload-status">{uploadStatus}</p>}
-                  </div>
-                  <div className="chat-input">
-                    <input
-                      type="text"
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Type your safety question..."
-                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                    />
-                    <button onClick={handleSendMessage} disabled={isLoading}>
-                      {isLoading ? 'Sending...' : 'Send'}
-                    </button>
-                  </div>
+                {error && <div className="error-message">{error}</div>}
+                <div className="chat-input">
+                  <input
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Type your safety question..."
+                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  />
+                  <button onClick={handleSendMessage} disabled={isLoading}>
+                    {isLoading ? 'Sending...' : 'Send'}
+                  </button>
                 </div>
               </div>
             </div>

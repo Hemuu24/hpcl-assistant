@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LandingPage.css';
+import './Landingpage.css';
 import hpclLogo from '../assets/images/hpcl-logo.png';
 import sliderImage1 from '../assets/images/sliderimage1.jpg';
 import sliderImage2 from '../assets/images/sliderimage2.jpg';

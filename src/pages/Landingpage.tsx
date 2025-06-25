@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Landingpage.css';
-import hpclLogo from '../assets/images/hpcl-logo.png';
 import sliderImage1 from '../assets/images/sliderimage1.jpg';
 import sliderImage2 from '../assets/images/sliderimage2.jpg';
 import sliderImage3 from '../assets/images/sliderimage3.jpeg';
@@ -11,11 +9,9 @@ import operationImage1 from '../assets/images/sliderimage1.jpg';
 import operationImage2 from '../assets/images/sliderimage3.jpeg';
 
 const LandingPage = () => {
-  const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   
   const sliderImages = [sliderImage1, sliderImage2, sliderImage3, sliderImage4, sliderImage5];
-  const operationImages = [operationImage1, operationImage2];
 
   useEffect(() => {
     const timer = setInterval(() => {

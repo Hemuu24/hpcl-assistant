@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import L, { Map as LeafletMap } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './EmergencyRoutingPage.css';
-import refineryMap from '/refinery_map.json';
 
 interface Incident {
   id: number;
@@ -12,6 +11,7 @@ interface Incident {
   description: string;
   location: string;
   timestamp: string;
+  lon: number;
 }
 
 interface Node {
@@ -22,6 +22,7 @@ interface Node {
 }
 
 const EmergencyRoutingPage: React.FC = () => {
+  const [mapData, setMapData] = useState<{ nodes: Node[] } | null>(null);
   const [incidents, setIncidents] = useState<Incident[]>([]);
   const [route, setRoute] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -29,9 +30,13 @@ const EmergencyRoutingPage: React.FC = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
   // Helper to get node by id
-  const getNodeById = (id: string): Node | undefined => refineryMap.nodes.find((n: Node) => n.id === id);
+  const getNodeById = (id: string): Node | undefined => mapData?.nodes.find((n: Node) => n.id === id);
 
   useEffect(() => {
+    fetch('/refinery_map.json')
+      .then(response => response.json())
+      .then(data => setMapData(data));
+
     // Clean up any previous map instance
     if (mapRef.current) {
       mapRef.current.remove();
@@ -84,34 +89,41 @@ const EmergencyRoutingPage: React.FC = () => {
           setTimeout(() => {
             const btn = document.getElementById(`route-to-${incident.location}`);
             if (btn) {
-              btn.onclick = () => handleRoute('G', incident.location);
+              btn.onclick = () => handleRoute(incident.location);
             }
           }, 100);
         });
       }
     });
     // Draw route if available
-    if (route.length > 1) {
-      const latlngs = route.map(id => {
-        const n = getNodeById(id);
-        return n ? [n.lat, n.lon] : null;
-      }).filter(Boolean) as [number, number][];
-      L.polyline(latlngs, { color: 'red', weight: 5 }).addTo(mapRef.current!);
+    if (route.length > 0) {
+      const routePoints: L.LatLngExpression[] = route
+        .map(getNodeById)
+        .filter((node): node is Node => !!node)
+        .map(node => [node.lat, node.lon]);
+      
+      if (routePoints.length > 1) {
+        const polyline = L.polyline(routePoints, { color: 'blue' }).addTo(mapRef.current!);
+        mapRef.current!.fitBounds(polyline.getBounds());
+      }
     }
-  }, [incidents, route]);
+  }, [mapData, incidents, route]);
 
   // Route calculation
-  const handleRoute = async (from: string, to: string) => {
+  const handleRoute = async (endNode: string) => {
     setLoading(true);
-    setRoute([]);
     try {
-      const res = await fetch('http://localhost:5000/route', {
+      const response = await fetch('http://localhost:5000/route', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ from, to, blocked: [] })
+        body: JSON.stringify({
+          from: 'G', // Assuming Main Gate is the start
+          to: endNode,
+          blocked: incidents.map(i => i.location)
+        }),
       });
-      const data = await res.json();
-      if (res.ok && data.route) {
+      const data = await response.json();
+      if (response.ok && data.route) {
         setRoute(data.route);
       } else {
         alert(data.error || 'No route found');

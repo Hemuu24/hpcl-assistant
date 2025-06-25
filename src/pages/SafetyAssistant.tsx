@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SafetyAssistant.css';
-import refineryMap from '/refinery_map.json';
 
 interface ChatMessage {
   sender: 'user' | 'bot';
   text: string;
+}
+
+interface Node {
+  id: string;
+  name: string;
 }
 
 const SafetyAssistant = () => {
@@ -13,10 +17,17 @@ const SafetyAssistant = () => {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mapData, setMapData] = useState<{ nodes: Node[] } | null>(null);
   const [hazardType, setHazardType] = useState('');
   const [hazardDescription, setHazardDescription] = useState('');
   const [hazardLocation, setHazardLocation] = useState('');
   const [reportStatus, setReportStatus] = useState('');
+
+  useEffect(() => {
+    fetch('/refinery_map.json')
+      .then(response => response.json())
+      .then(data => setMapData(data));
+  }, []);
 
   const emergencyProcedures = [
     {
@@ -251,7 +262,7 @@ const SafetyAssistant = () => {
                 </select>
                 <select value={hazardLocation} onChange={e => setHazardLocation(e.target.value)} required>
                   <option value="">Select location</option>
-                  {refineryMap.nodes.map((node: any) => (
+                  {mapData?.nodes.map((node: Node) => (
                     <option key={node.id} value={node.id}>{node.name}</option>
                   ))}
                 </select>
